@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/macro";
 
-import { COLORS, WEIGHTS } from "../../constants";
+import { COLORS, QUERIES, WEIGHTS } from "../../constants";
 import { formatPrice, pluralize, isNewShoe } from "../../utils";
 import Spacer from "../Spacer";
 
@@ -73,17 +73,25 @@ const Wrapper = styled.article`
 `;
 
 const ImageWrapper = styled.div`
+  border-radius: 16px 16px 4px 4px;
   overflow: hidden;
 `;
 
 const Image = styled.img`
+  /** Remove default inline image bottom space */
+  display: block;
   width: 100%;
-  border-radius: 16px 16px 4px 4px;
   transition: transform 350ms;
+  /** move the transform origin to near the position of the shoe */
+  transform-origin: 50% 75%;
+  will-change: transform;
 
-  &:hover {
-    transform: scale(1.1);
-    transition: transform 150ms;
+  @media ${QUERIES.noReducedAnimation} {
+    ${Link}:hover &,
+    ${Link}:focus & {
+      transform: scale(1.1);
+      transition: transform 150ms;
+    }
   }
 `;
 

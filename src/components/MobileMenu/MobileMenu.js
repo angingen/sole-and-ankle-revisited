@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import styled from "styled-components/macro";
-import { keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components/macro";
 import { DialogOverlay, DialogContent } from "@reach/dialog";
 
 import { COLORS, QUERIES } from "../../constants";
@@ -123,15 +122,17 @@ const fadeIn = keyframes`
 `;
 
 const Content = styled(DialogContent)`
+  --overfill: -16px;
   padding: 32px;
   background-color: ${COLORS.white};
-  width: max(300px, 50vw);
+  width: calc(max(300px, 50vw) + var(--overfill));
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-right: var(--overfill);
 
   @media ${QUERIES.noReducedAnimation} {
-    animation: ${slideIn} 250ms 0s ease-in-out both;
+    animation: ${slideIn} 250ms 0s cubic-bezier(0, 0.61, 0.6, 1.22) both;
 
     > * {
       animation: ${fadeIn} 250ms 200ms ease-in-out both;
