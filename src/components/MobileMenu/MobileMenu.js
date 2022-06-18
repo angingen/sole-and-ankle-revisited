@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import styled from "styled-components/macro";
+import { keyframes } from "styled-components";
 import { DialogOverlay, DialogContent } from "@reach/dialog";
 
 import { COLORS, QUERIES } from "../../constants";
@@ -35,18 +36,32 @@ const MobileMenu = ({ isOpen, onDismiss }) => {
   );
 };
 
+const backgroundFadeIn = keyframes`
+  from {
+    background: transparent;
+  }
+
+  to {
+    background: hsl(0deg 0% 0% / 0.5);
+  }
+`;
+
 const Overlay = styled(DialogOverlay)`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: hsl(0deg 0% 0% / 0.5);
   display: none;
 
   @media ${QUERIES.tabletAndBelow} {
     display: flex;
     justify-content: flex-end;
+  }
+
+  @media ${QUERIES.noReducedAnimation} {
+    animation: ${backgroundFadeIn} 600ms ease-out;
+    animation-fill-mode: both;
   }
 `;
 
@@ -87,6 +102,26 @@ const FooterLink = styled.a`
   color: ${COLORS.gray[700]};
 `;
 
+const slideIn = keyframes`
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+`;
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
+
 const Content = styled(DialogContent)`
   padding: 32px;
   background-color: ${COLORS.white};
@@ -94,6 +129,14 @@ const Content = styled(DialogContent)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media ${QUERIES.noReducedAnimation} {
+    animation: ${slideIn} 250ms 0s ease-in-out both;
+
+    > * {
+      animation: ${fadeIn} 250ms 200ms ease-in-out both;
+    }
+  }
 `;
 
 export default MobileMenu;

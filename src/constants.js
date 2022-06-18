@@ -27,4 +27,5 @@ export const QUERIES = {
   phoneAndBelow: `(max-width: ${BREAKPOINTS.phoneMax}px)`,
   tabletAndBelow: `(max-width: ${BREAKPOINTS.tabletMax}px)`,
   laptopAndBelow: `(max-width: ${BREAKPOINTS.laptopMax}px)`,
+  noReducedAnimation: "(prefers-reduced-motion: no-preference)",
 };

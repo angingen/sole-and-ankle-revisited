@@ -9,6 +9,15 @@ import VisuallyHidden from "../VisuallyHidden";
 import UnstyledButton from "../UnstyledButton";
 import Icon from "../Icon";
 
+const FlipUpNavLink = ({ children, href }) => (
+  <NavLink href={href}>
+    <NavLinkContentWrapper>
+      <NavLinkContent>{children}</NavLinkContent>
+      <NavLinkContent aria-hidden>{children}</NavLinkContent>
+    </NavLinkContentWrapper>
+  </NavLink>
+);
+
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
 
@@ -25,12 +34,12 @@ const Header = () => {
           <Logo />
         </Side>
         <Nav>
-          <NavLink href="/sale">Sale</NavLink>
-          <NavLink href="/new">New&nbsp;Releases</NavLink>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/kids">Kids</NavLink>
-          <NavLink href="/collections">Collections</NavLink>
+          <FlipUpNavLink href="/sale">Sale</FlipUpNavLink>
+          <FlipUpNavLink href="/new">New&nbsp;Releases</FlipUpNavLink>
+          <FlipUpNavLink href="/men">Men</FlipUpNavLink>
+          <FlipUpNavLink href="/women">Women</FlipUpNavLink>
+          <FlipUpNavLink href="/kids">Kids</FlipUpNavLink>
+          <FlipUpNavLink href="/collections">Collections</FlipUpNavLink>
         </Nav>
         <Side />
         <IconButton>
@@ -74,15 +83,35 @@ const Side = styled.div`
   flex: 1;
 `;
 
+const NavLinkContentWrapper = styled.span`
+  display: block;
+  transition: transform 450ms;
+`;
+
 const NavLink = styled.a`
   font-size: 1.125rem;
   text-transform: uppercase;
   text-decoration: none;
   color: ${COLORS.gray[900]};
   font-weight: ${WEIGHTS.medium};
+  height: calc(1.5 * 1.125rem);
+  overflow: hidden;
 
   &:first-of-type {
     color: ${COLORS.secondary};
+  }
+
+  &:hover ${NavLinkContentWrapper} {
+    transform: translateY(calc(-1.125rem * 1.5));
+    transition: transform 250ms;
+  }
+`;
+
+const NavLinkContent = styled.span`
+  display: block;
+
+  &:last-of-type {
+    font-weight: ${WEIGHTS.bold};
   }
 `;
 
